@@ -38,4 +38,5 @@ jobs:
           use-kubelogin: 'true'
       - name: Run kubectl
         run: |
-          kubectl apply -f nginx.yaml
+          kubectl apply -k overlay/dev
+          kubectl apply -k overlay/prod
