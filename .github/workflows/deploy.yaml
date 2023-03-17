@@ -1,6 +1,10 @@
 on:
   push:
-    branches: [ "main" ]
+    branches:
+    - main
+    paths:
+      - "base/**"
+      - "overlay/**"
   workflow_dispatch:
 
 permissions:
@@ -18,9 +22,6 @@ jobs:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-      
-      - name: 'Run basic AZ CLI command'
-        run: az group list
         
       - uses: azure/setup-kubectl@v3
         name: Setup kubectl
