@@ -36,4 +36,4 @@ jobs:
           use-kubelogin: 'true'
       - name: Run kubectl
         run: |
-          kubectl get pods
+          kubectl apply -f nginx.yaml
