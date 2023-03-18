@@ -2,11 +2,12 @@
 
 This demonstrates how to leverage federated identity credential with user-assigned managed identity to deploy K8S workload into AKS cluster with Azure RBAC for Kubernetes Authorization.  
 
-This method solves a couple of challenges: 
-a) Federated credentials to access Azure resources.  OIDC allows GitHub Actions workflows to access resources in Azure, without needing to store the Azure credentials as long-lived GitHub secrets.  
-b) Leverags Azure RBAC for Kubernetese to deploy Kubernetes application directly into AKS cluster. AKS is an Azure resource and Azure roles such as "Azure Kubernetes Service RBAC Writer" has been assigned to managed identity. 
+This method solves a couple of challenges:   
+-  Federated credentials to access Azure resources.  OIDC allows GitHub Actions workflows to access resources in Azure, without needing to store the Azure credentials as long-lived GitHub secrets.    
+-  Leverags Azure RBAC for Kubernetese to deploy Kubernetes application directly into AKS cluster. AKS is an Azure resource and Azure roles such as "Azure Kubernetes Service RBAC Writer" has been assigned to managed identity. 
 
-It's mapping of  Managed Identity to GitHub Org+Repo+Branch where GitHub Actions workflow live.
+It's mapping of  Managed Identity to GitHub Org+Repo+Branch where GitHub Actions workflow live.  
+
 ![](content/relationshipdiagramwithMI.png)
 
 It's important to note that this does not require any administrator to login to AKS/K8S to setup any roles as it's taken care of by Azure RBAC for K8S auth layer. In few steps,  you establish a continuous deploy pipeline from Github without exchanging/sending/storing any secrets to deploy workload into your AKS cluster without any secrets laying around!
@@ -54,8 +55,12 @@ With the information from this link above and from this workflow in this repo, i
 ## Managed identity access to deploy workload into AKS
 
 Create a AKS cluster  
-Enable 'Azure AD authentication with Azure RBAC'
-Let's assign RBAC Writer role scoped to devns and prodns namespaces only (commands below. You need to assign yourself admin access and create prodns and devns namespaces).  In real world scenario, most likely, AKS platform administrators create namespaces and creates roles below. Roles might be created by security team or platform team and it all depends. 
+
+Enable 'Azure AD authentication with Azure RBAC'  
+
+Let's assign RBAC Writer role scoped to devns and prodns namespaces only (commands below).   
+
+It is assumed that your administrator has created namespaces. In this case, you need to give yourself admin access and create the prodns and devns namespaces.  In a typical scenario, AKS platform administrators would create namespaces and establish roles. The creation of roles might be done by either the security team or the platform team, and it depends on the situation.
 ```
 az role assignment create --role "Azure Kubernetes Service Cluster User Role" --assignee "OBJECTIDOFUAMIGOESHERE" --scope /subscriptions/SUBSCRIPTIONIDGOESHERE/resourcegroups/aksgithubrg/providers/Microsoft.ContainerService/managedClusters/aksgithub
 
@@ -71,7 +76,9 @@ az role assignment create --role "Azure Kubernetes Service RBAC Writer" --assign
 base folder has basic nginx deployment with namespace and service creation. 
 overlay folder has dev and prod. 
 
-Feel free to change this based on application deployment. Intention is to demo how simple it is to deploy/update an app with GitHub and AKS.
+
+---
+You are free to modify this based on your application deployment needs. The purpose of this demonstration is to show how easy it is to deploy or update an app with GitHub Actions and AKS, thanks to the recently supported features such as Federated managed credentials.
 
 
 
