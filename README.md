@@ -78,6 +78,8 @@ overlay folder has dev and prod.
 
 
 ---
+## Summary
+
 You are free to modify this based on your application deployment needs. The purpose of this demonstration is to show how easy it is to deploy or update an app with GitHub Actions and AKS, thanks to the recently supported features such as Federated managed credentials.
 
 
