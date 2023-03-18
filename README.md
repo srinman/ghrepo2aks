@@ -73,9 +73,10 @@ az role assignment create --role "Azure Kubernetes Service RBAC Writer" --assign
 
 ## Deploy workload 
 
-GitHub Actions has been setup to trigger based on updates to main branch in /base and /overlay directories.  
-base folder has basic nginx deployment with namespace and service creation.   
-overlay folder has dev and prod. 
+GitHub Actions has been setup to trigger based on updates to main branch in /base and /overlay directories.
+base folder has basic nginx deployment and service creation.   
+overlay folder has dev and prod.   
+Uses basic kustomize to deploy to two namespaces in AKS cluster. 
 
 
 ---
