@@ -10,7 +10,9 @@ It's mapping of  Managed Identity to GitHub Org+Repo+Branch where GitHub Actions
 
 ![](content/relationshipdiagramwithMI.png)
 
-It's important to note that this does not require any administrator to login to AKS/K8S to setup any roles as it's taken care of by Azure RBAC for K8S auth layer. In few steps,  you establish a continuous deploy pipeline from Github without exchanging/sending/storing any secrets to deploy workload into your AKS cluster without any secrets laying around!
+
+It's crucial to keep in mind that there is no need for an administrator to log in to AKS/K8S to set up any roles, as it is handled by the Azure RBAC for K8S authorization layer. With just a few steps, you can establish a continuous deployment pipeline from Github without exchanging, sending, or storing any secrets, allowing you to deploy workloads into your AKS cluster without any lingering secrets.
+
 
 
 https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp
