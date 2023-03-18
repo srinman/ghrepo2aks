@@ -14,21 +14,29 @@ jobs:
   azlogin:
     runs-on: ubuntu-latest
     steps:
+    # checkout repo for later kubectl apply
       - uses: actions/checkout@v3
-      
+
+    # check https://github.com/Azure/ for more info. about actions
+    # lets az login with managed identity (with the help of federated creds) 
       - name: 'Az CLI Login'
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-        
-      - uses: azure/setup-kubectl@v3
-        name: Setup kubectl
+
+    # setup kubectl and kubelogin
+
+      - name: Setup kubectl        
+        uses: azure/setup-kubectl@v3
+         
       - name: Setup kubelogin
         uses: azure/use-kubelogin@v1
         with:
-          kubelogin-version: 'v0.0.26'
+          kubelogin-version: 'v0.0.24'
+
+    # retrieve endpoint and kubelogin
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
@@ -37,6 +45,7 @@ jobs:
           cluster-name: 'aksgithub'
           admin: 'false'
           use-kubelogin: 'true'
+    # kustomize and apply 
       - name: Run kubectl
         run: |
           kubectl apply -k overlay/dev
