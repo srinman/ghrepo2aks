@@ -34,7 +34,15 @@ With the information from this link above and from this workflow in this repo, i
 
 Create a AKS cluster 
 Enable 'Azure AD authentication with Azure RBAC'
-For this AKS cluster, assign 'Azure Kubernetes Service RBAC Admin' role to the UAMI
+Let's assign RBAC Writer role scoped to devns and prodns namespaces only (commands below)
+```
+az role assignment create --role "Azure Kubernetes Service Cluster User Role" --assignee "OBJECTIDOFUAMIGOESHERE" --scope /subscriptions/SUBSCRIPTIONIDGOESHERE/resourcegroups/aksgithubrg/providers/Microsoft.ContainerService/managedClusters/aksgithub
+
+az role assignment create --role "Azure Kubernetes Service RBAC Writer" --assignee "OBJECTIDOFUAMIGOESHERE" --scope /subscriptions/SUBSCRIPTIONIDGOESHERE/resourcegroups/aksgithubrg/providers/Microsoft.ContainerService/managedClusters/aksgithub/namespaces/prodns
+
+az role assignment create --role "Azure Kubernetes Service RBAC Writer" --assignee "OBJECTIDOFUAMIGOESHERE" --scope /subscriptions/SUBSCRIPTIONIDGOESHERE/resourcegroups/aksgithubrg/providers/Microsoft.ContainerService/managedClusters/aksgithub/namespaces/devns
+```
+
 
 
 ## Deploy workload 
